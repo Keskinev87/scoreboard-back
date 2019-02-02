@@ -5,7 +5,7 @@ let playerSchema = new mongoose.Schema({
     country: {type: String, required: true},
     registrationDate: {type: Date, required: true},
     score: {type: Number, required: true},
-    level: {type: String, required: true},
+    level: {type: Number, required: true},
     dateInMiliSeconds: {type: Number, required: true}
 })
 

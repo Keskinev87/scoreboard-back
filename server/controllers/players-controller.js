@@ -16,8 +16,19 @@ module.exports = {
     addNewPlayer: (req, res) => {
         // console.log(req.body)
         let player = req.body;
-        
-        //TODO: Validation
+        if(!player.name){
+            res.status(400).json("name");
+        } 
+        if(!player.country){
+            res.status(400).json("country");
+        }
+        if(!player.score) {
+            res.status(400).json("score")
+        }
+        player.score = Number(player.score);
+        player.registrationDate = new Date();
+        //TODO: Validation as with the front-end
+        //Check for already existing names like this one
        
         switch(true) {
             case player.score <= 20: 
@@ -43,10 +54,10 @@ module.exports = {
 
         Player.create(player).then(() => {
             console.log("player created");
-            res.status(200).json("Success")
+            res.status(200).json("ok");
         }).catch(error => {
             allPlayersSaved = false
-            res.status(500).json("Error when saving!")
+            res.status(500).json("error");
             console.log(error)
         });
     }
