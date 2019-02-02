@@ -1,0 +1,21 @@
+{
+  "name": "scoreboard",
+  "version": "0.0.1",
+  "description": "Scoreboard",
+  "main": "index.js",
+  "engines": {
+    "node": "7.10.0",
+    "npm": "4.2.0"
+  },
+  "keywords": [
+    "scoreboard"
+  ],
+  "author": "Yavor Keskinev",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3",
+    "mongoose": "^5.2.13",
+    "nodemon": "^1.18.4"
+  }
+}
