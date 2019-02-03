@@ -1,5 +1,6 @@
 const express = require('express')
 const bodyParser = require('body-parser')
+const compression = require('compression')
 
 module.exports = (app) => {
   //CORS Middleware
@@ -18,6 +19,7 @@ module.exports = (app) => {
   app.use(bodyParser.urlencoded({ extended: false }));
   app.use(bodyParser.json());
   app.use(express.static('client'));
+  app.use(compression());
 
 
   console.log('Express ready!');
