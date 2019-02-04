@@ -1,6 +1,7 @@
 const Player = require('../data/Player')
 const sorter = require('../utilities/sorter')
 const levelCalc = require('../utilities/levelCalc')
+const validator = require('../utilities/validator')
 
 module.exports = {
     getPlayers: (req, res) => {
@@ -63,13 +64,13 @@ module.exports = {
     addNewPlayer: (req, res) => {
         // console.log(req.body)
         let player = req.body;
-        if(!player.name){
+        if(!player.name || !validator.validateName(player.name)){
             res.status(400).json("name");
         } 
-        if(!player.country){
+        if(!player.country || !validator.validateCountry(player.country)){
             res.status(400).json("country");
         }
-        if(!player.score) {
+        if(!player.score || !validator.validateScore(player.score)) {
             res.status(400).json("score")
         }
 
@@ -83,14 +84,24 @@ module.exports = {
         player.level = levelCalc.getLevel(player.score);
         player.dateInMiliSeconds = new Date(player.registrationDate).getTime();
 
-        Player.create(player).then(() => {
-            console.log(player);
-            res.status(200).json("ok");
+        Player.findOne({name: player.name}).then((playerExists) => {
+            if(playerExists)
+                res.status(400).json("exists")
+            else {
+                Player.create(player).then(() => {
+                    console.log(player);
+                    res.status(200).json("ok");
+                }).catch(error => {
+                    allPlayersSaved = false
+                    res.status(500).json("error");
+                    console.log(error)
+                });
+            }
         }).catch(error => {
-            allPlayersSaved = false
             res.status(500).json("error");
-            console.log(error)
-        });
+            console.log(error);
+        })
+        
     },
     importBulk: (req, res) => {
         let players = req.body.players
