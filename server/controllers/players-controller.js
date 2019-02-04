@@ -11,8 +11,13 @@ module.exports = {
         // }
         console.log(req.body);
         // console.log(typeof(req.body.filterCountries))
+        
+        console.log(req.body.filterCountries);
         let filterName = req.body.filterName;
         let filterCountries = req.body.filterCountries;
+        for(let i = 0; i < filterCountries.length; i++) {
+            filterCountries[i] = filterCountries[i].toLowerCase();
+        }
         let filterDateFrom = new Date(req.body.filterDateFrom).getTime();
         let filterDateTo = new Date(req.body.filterDateTo).getTime();
         let sortCriteria;
